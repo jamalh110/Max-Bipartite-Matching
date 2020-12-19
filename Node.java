@@ -24,11 +24,20 @@ public class Node {
         return false;
     }
 
+    public Edge getEdge(Node node){
+        for (Edge i:edges){
+            if(i.getLeft()==node || i.getRight()==node){
+                return i;
+            }
+        }
+        return null;
+    }
+
     public String printNode(){
         String p = ""+this.name+" ";
         for(Edge edge: edges){
             if(edge.getRight()!=this){
-                p+= ("connected to node " + edge.getRight().name + ", ");
+                p+= (" connected to node " + edge.getRight().name + ", ");
             }
         }
         

@@ -16,4 +16,8 @@ public class Edge {
     public Node getRight(){
         return right;
     }
+    @Override
+    public String toString() {
+        return "(" + left + ", " + right + ")";
+    }
 }
