@@ -9,10 +9,8 @@ import java.util.TreeSet;
 import java.util.LinkedList;
 
 public class Algorithm {
-    public static LinkedList<Edge> getAugmentingPath(BipartiteGraph graph, LinkedList<Edge> matching,
-            LinkedList<Edge> unmatched) {
-        ArrayList<Node> lfree = new ArrayList<Node>();
-        ArrayList<Node> rfree = new ArrayList<Node>(); // may want to change this to better data structure later
+    public static void fillLFreeRFree(BipartiteGraph graph, AbstractCollection<Edge> matching,
+            AbstractCollection<Node> lfree, AbstractCollection<Node> rfree) {
         for (Node n : graph.left) {
             lfree.add(n);
         }
@@ -34,10 +32,16 @@ public class Algorithm {
                 rfree.remove(e.getRight());
             }
         }
+    }
+
+    public static LinkedList<Edge> getAugmentingPath(BipartiteGraph graph, LinkedList<Edge> matching,
+            LinkedList<Edge> unmatched) {
+        ArrayList<Node> lfree = new ArrayList<Node>();
+        ArrayList<Node> rfree = new ArrayList<Node>(); // may want to change this to better data structure later
+        fillLFreeRFree(graph, matching, lfree, rfree);
 
         LinkedList<Node> hitNodes = new LinkedList<Node>();
-        HashMap<Node,Node> map = new HashMap<Node,Node>();
-
+        HashMap<Node, Node> map = new HashMap<Node, Node>();
 
         LinkedList<Edge> unmatchedEdgeFrontier = new LinkedList<Edge>();
         for (Node n : lfree) {
@@ -50,12 +54,11 @@ public class Algorithm {
         // boolean lookingForMatched = false
         // BFS
         Node freeNode = null;
-        //switch to dfs thing later
-        
+        // switch to dfs thing later
 
         while (true) {
             // unmatched phase
-            if(unmatchedEdgeFrontier.size()==0){
+            if (unmatchedEdgeFrontier.size() == 0) {
                 break;
             }
             for (Edge e : unmatchedEdgeFrontier) {
@@ -63,7 +66,7 @@ public class Algorithm {
                     // found augmenting path!
                     freeNode = e.getRight();
                     map.put(freeNode, e.getLeft());
-                    //set this to 0 so the outer loop breaks
+                    // set this to 0 so the outer loop breaks
                     matchedEdgeFrontier = new LinkedList<Edge>();
                     break;
                 } else if (!hitNodes.contains(e.getRight())) {
@@ -74,10 +77,10 @@ public class Algorithm {
                             matchedEdgeFrontier.add(nodeEdge);
                         }
                     }
-                } 
+                }
             }
             unmatchedEdgeFrontier = new LinkedList<Edge>();
-            if(matchedEdgeFrontier.size()==0){
+            if (matchedEdgeFrontier.size() == 0) {
                 break;
             }
 
@@ -87,22 +90,23 @@ public class Algorithm {
                     hitNodes.add(e.getLeft());
                     for (Edge nodeEdge : e.getLeft().edges) {
                         if (unmatched.contains(nodeEdge)) {
-                            map.put(e.getLeft(),e.getRight());
+                            map.put(e.getLeft(), e.getRight());
                             unmatchedEdgeFrontier.add(nodeEdge);
                         }
                     }
-                } 
+                }
             }
             matchedEdgeFrontier = new LinkedList<Edge>();
 
         }
-        if (freeNode == null) return null;
-        
+        if (freeNode == null)
+            return null;
+
         Node currentNode = freeNode;
         LinkedList<Node> nodePath = new LinkedList<Node>();
-        while(true){
+        while (true) {
             nodePath.add(currentNode);
-            if(map.get(currentNode)==null){
+            if (map.get(currentNode) == null) {
                 break;
             }
             currentNode = map.get(currentNode);
@@ -110,42 +114,21 @@ public class Algorithm {
 
         LinkedList<Edge> edgePath = new LinkedList<Edge>();
         assert nodePath.size() > 1;
-        for(int i = 0;i<nodePath.size()-1;i++){
-            edgePath.add(nodePath.get(i).getEdge(nodePath.get(i+1)));
+        for (int i = 0; i < nodePath.size() - 1; i++) {
+            edgePath.add(nodePath.get(i).getEdge(nodePath.get(i + 1)));
         }
         return edgePath;
 
     }
 
-    public static LinkedList<Edge> getAugmentingPathFast(BipartiteGraph graph, Set<Edge> matching,
-            Set<Edge> unmatched) {
-        Set<Node> lfree = new TreeSet<Node>();
-        Set<Node> rfree = new TreeSet<Node>(); 
-        for (Node n : graph.left) {
-            lfree.add(n);
-        }
-        for (Node n : graph.right) {
-            rfree.add(n);
-        }
-
-        for (Edge e : matching) {
-            if (lfree.contains(e.getLeft())) {
-                lfree.remove(e.getLeft());
-            }
-            if (lfree.contains(e.getRight())) {
-                lfree.remove(e.getRight());
-            }
-            if (rfree.contains(e.getLeft())) {
-                rfree.remove(e.getLeft());
-            }
-            if (rfree.contains(e.getRight())) {
-                rfree.remove(e.getRight());
-            }
-        }
+    public static LinkedList<Edge> getAugmentingPathFastTree(BipartiteGraph graph, TreeSet<Edge> matching,
+            Set<Edge> unmatched, TreeSet<Node> lfree, TreeSet<Node> rfree) {
+        // TreeSet<Node> lfree = new TreeSet<Node>();
+        // TreeSet<Node> rfree = new TreeSet<Node>();
+        // fillLFreeRFree(graph, matching, lfree, rfree);
 
         Set<Node> hitNodes = new TreeSet<Node>();
-        TreeMap<Node,Node> map = new TreeMap<Node,Node>();
-
+        TreeMap<Node, Node> map = new TreeMap<Node, Node>();
 
         Set<Edge> unmatchedEdgeFrontier = new TreeSet<Edge>();
         for (Node n : lfree) {
@@ -158,12 +141,11 @@ public class Algorithm {
         // boolean lookingForMatched = false
         // BFS
         Node freeNode = null;
-        //switch to dfs thing later
-        
+        // switch to dfs thing later
 
         while (true) {
             // unmatched phase
-            if(unmatchedEdgeFrontier.size()==0){
+            if (unmatchedEdgeFrontier.size() == 0) {
                 break;
             }
             for (Edge e : unmatchedEdgeFrontier) {
@@ -171,7 +153,7 @@ public class Algorithm {
                     // found augmenting path!
                     freeNode = e.getRight();
                     map.put(freeNode, e.getLeft());
-                    //set this to 0 so the outer loop breaks
+                    // set this to 0 so the outer loop breaks
                     matchedEdgeFrontier = new TreeSet<Edge>();
                     break;
                 } else if (!hitNodes.contains(e.getRight())) {
@@ -182,10 +164,10 @@ public class Algorithm {
                             matchedEdgeFrontier.add(nodeEdge);
                         }
                     }
-                } 
+                }
             }
             unmatchedEdgeFrontier = new TreeSet<Edge>();
-            if(matchedEdgeFrontier.size()==0){
+            if (matchedEdgeFrontier.size() == 0) {
                 break;
             }
 
@@ -195,22 +177,25 @@ public class Algorithm {
                     hitNodes.add(e.getLeft());
                     for (Edge nodeEdge : e.getLeft().edges) {
                         if (unmatched.contains(nodeEdge)) {
-                            map.put(e.getLeft(),e.getRight());
+                            map.put(e.getLeft(), e.getRight());
                             unmatchedEdgeFrontier.add(nodeEdge);
                         }
                     }
-                } 
+                }
             }
             matchedEdgeFrontier = new TreeSet<Edge>();
 
         }
-        if (freeNode == null) return null;
-        
+        if (freeNode == null)
+            return null;
+
         Node currentNode = freeNode;
+        rfree.remove(freeNode);
         LinkedList<Node> nodePath = new LinkedList<Node>();
-        while(true){
+        while (true) {
             nodePath.add(currentNode);
-            if(map.get(currentNode)==null){
+            if (map.get(currentNode) == null) {
+                lfree.remove(currentNode);
                 break;
             }
             currentNode = map.get(currentNode);
@@ -218,14 +203,15 @@ public class Algorithm {
 
         LinkedList<Edge> edgePath = new LinkedList<Edge>();
         assert nodePath.size() > 1;
-        for(int i = 0;i<nodePath.size()-1;i++){
-            edgePath.add(nodePath.get(i).getEdge(nodePath.get(i+1)));
+        for (int i = 0; i < nodePath.size() - 1; i++) {
+            edgePath.add(nodePath.get(i).getEdge(nodePath.get(i + 1)));
         }
         return edgePath;
 
     }
 
-    public static void xorMatch(AbstractCollection<Edge> matching, AbstractCollection<Edge> unmatched, List<Edge> path) {
+    public static void xorMatch(AbstractCollection<Edge> matching, AbstractCollection<Edge> unmatched,
+            List<Edge> path) {
         for (Edge pathEdge : path) {
             if (matching.contains(pathEdge)) {
                 matching.remove(pathEdge);
@@ -249,14 +235,14 @@ public class Algorithm {
             }
         }
 
-        //boolean has_aug_path = true;
+        // boolean has_aug_path = true;
         LinkedList<Edge> path;
         while (true) {
             path = getAugmentingPath(graph, matching, unmatched);
             if (path != null) {
                 xorMatch(matching, unmatched, path);
             } else {
-                //has_aug_path = false;
+                // has_aug_path = false;
                 break;
             }
         }
@@ -266,6 +252,9 @@ public class Algorithm {
     public static List<Edge> hopKarpFast(BipartiteGraph graph) {
         TreeSet<Edge> matching = new TreeSet<Edge>();
         TreeSet<Edge> unmatched = new TreeSet<Edge>();
+        TreeSet<Node> lfree = new TreeSet<Node>();
+        TreeSet<Node> rfree = new TreeSet<Node>();
+        fillLFreeRFree(graph, matching, lfree, rfree);
         // todo will some heursitic of how to initially pick the edges for the algo make
         // it faster?
         // we can make it so this automatically goes for the highest weight edges
@@ -275,14 +264,14 @@ public class Algorithm {
             }
         }
 
-        //boolean has_aug_path = true;
+        // boolean has_aug_path = true;
         LinkedList<Edge> path;
         while (true) {
-            path = getAugmentingPathFast(graph, matching, unmatched);
+            path = getAugmentingPathFastTree(graph, matching, unmatched, lfree, rfree);
             if (path != null) {
                 xorMatch(matching, unmatched, path);
             } else {
-                //has_aug_path = false;
+                // has_aug_path = false;
                 break;
             }
         }

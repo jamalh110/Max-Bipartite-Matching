@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        // BipartiteGraph g = new BipartiteGraph("log.txt");
+        // BipartiteGraph g = new BipartiteGraph("test2.txt");
         BipartiteGraph g = generateTestGraph(6000, 6000);
         //BipartiteGraph g = test1();
         // System.out.println(g.printGraph());
