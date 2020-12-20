@@ -49,7 +49,6 @@ public class Algorithm {
         
 
         while (true) {
-            //System.out.println("here1");
             // unmatched phase
             if(unmatchedEdgeFrontier.size()==0){
                 break;
@@ -57,7 +56,6 @@ public class Algorithm {
             for (Edge e : unmatchedEdgeFrontier) {
                 if (rfree.contains(e.getRight())) {
                     // found augmenting path!
-                    
                     freeNode = e.getRight();
                     map.put(freeNode, e.getLeft());
                     //set this to 0 so the outer loop breaks
@@ -80,15 +78,11 @@ public class Algorithm {
 
             // matched phase
             for (Edge e : matchedEdgeFrontier) {
-                // check to see if e.left in lfree
-                // build up matchedEdgeFrontier
                 if (!hitNodes.contains(e.getLeft())) {
                     hitNodes.add(e.getLeft());
                     for (Edge nodeEdge : e.getLeft().edges) {
                         if (unmatched.contains(nodeEdge)) {
-
                             map.put(e.getLeft(),e.getRight());
-                            
                             unmatchedEdgeFrontier.add(nodeEdge);
                         }
                     }
@@ -102,7 +96,6 @@ public class Algorithm {
         Node currentNode = freeNode;
         LinkedList<Node> nodePath = new LinkedList<Node>();
         while(true){
-            //System.out.println("here3");
             nodePath.add(currentNode);
             if(map.get(currentNode)==null){
                 break;
@@ -146,7 +139,6 @@ public class Algorithm {
         //boolean has_aug_path = true;
         LinkedList<Edge> path;
         while (true) {
-            //System.out.println("here2");
             path = getAugmentingPath(graph, matching, unmatched);
             if (path != null) {
                 xorMatch(matching, unmatched, path);
@@ -154,7 +146,6 @@ public class Algorithm {
                 //has_aug_path = false;
                 break;
             }
-            //System.out.println(matching.size());
         }
         return matching;
     }

@@ -10,9 +10,9 @@ public class Main {
 
         List<Edge> matching  = Algorithm.hopKarp(g);
         
-        for(Edge i: matching){
-            //System.out.println(i.getLeft().name+ " - " + i.getRight().name);
-        }
+        // for(Edge e: matching){
+        //     System.out.println(e);
+        // }
         System.out.println("Matching size: " + matching.size());
         System.out.println("Bipartite Graph size: " + g.left.size());
         // g.toFile("log.txt");
