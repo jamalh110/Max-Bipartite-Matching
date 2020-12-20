@@ -2,9 +2,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
+    
     public static void main(String[] args) {
         //BipartiteGraph g = BipartiteGraph.readGraph("./Hungarian-Heuristics/test.txt");
-        BipartiteGraph g = generateTestGraph(500, 1000);
+        BipartiteGraph g = generateTestGraph(200, 1000);
         //BipartiteGraph g = test1();
         System.out.println(g.printGraph(true));
 
