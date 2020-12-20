@@ -3,12 +3,13 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        BipartiteGraph g = new BipartiteGraph("log.txt");
-        // BipartiteGraph g = generateTestGraph(500, 1000);
+        // BipartiteGraph g = new BipartiteGraph("log.txt");
+        BipartiteGraph g = generateTestGraph(6000, 6000);
         //BipartiteGraph g = test1();
         System.out.println(g.printGraph(true));
 
         List<Edge> matching  = Algorithm.hopKarp(g);
+        // List<Edge> matching  = Algorithm.hopKarpFast(g);
         
         // for(Edge e: matching){
         //     System.out.println(e);
