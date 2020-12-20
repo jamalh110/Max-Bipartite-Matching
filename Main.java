@@ -3,7 +3,8 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        BipartiteGraph g = generateTestGraph(2000, 20000);
+        BipartiteGraph g = BipartiteGraph.readGraph("test.txt");
+        // BipartiteGraph g = generateTestGraph(5, 20);
         //BipartiteGraph g = test1();
         System.out.println(g.printGraph());
 
