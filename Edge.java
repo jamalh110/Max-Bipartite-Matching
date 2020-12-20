@@ -20,4 +20,7 @@ public class Edge {
     public String toString() {
         return "(" + left + ", " + right + ")";
     }
+    public String toStringTest() {
+        return left + " " + right;
+    }
 }

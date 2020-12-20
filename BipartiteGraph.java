@@ -58,13 +58,23 @@ public class BipartiteGraph {
         return b;
     }
 
-    public String printGraph() {
+    public String printGraph(boolean testOutput) {
         String print = "";
+        if(testOutput){
+            print+=this.left.size()*2+"\n";
+        }
+        else{
         print += ("size of left: " + left.size());
         print += ("\nsize of right: " + right.size()) + "\n";
+        }
         for (Node node : left) {
             for (Edge e : node.edges) {
-                print += e.toString() + "\n";
+                if(testOutput){
+                    print += e.toStringTest() + "\n";
+                }
+                else{
+                    print += e.toString() + "\n";
+                }
             }
             // print += (node.printNode()) + "\n";
         }

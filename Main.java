@@ -3,21 +3,21 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        BipartiteGraph g = BipartiteGraph.readGraph("test.txt");
-        // BipartiteGraph g = generateTestGraph(5, 20);
+        //BipartiteGraph g = BipartiteGraph.readGraph("./Hungarian-Heuristics/test.txt");
+        BipartiteGraph g = generateTestGraph(500, 1000);
         //BipartiteGraph g = test1();
-        System.out.println(g.printGraph());
+        System.out.println(g.printGraph(true));
 
         List<Edge> matching  = Algorithm.hopKarp(g);
         
         for(Edge i: matching){
-            System.out.println(i.getLeft().name+ " - " + i.getRight().name);
+            //System.out.println(i.getLeft().name+ " - " + i.getRight().name);
         }
         System.out.println("Matching size: " + matching.size());
         System.out.println("Bipartite Graph size: " + g.left.size());
     }
 
-    
+
     public static BipartiteGraph test1(){
         BipartiteGraph b = new BipartiteGraph();
         for (int i = 0; i < 6; i++) {
