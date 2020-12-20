@@ -2,11 +2,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BipartiteGraph {
     public ArrayList<Node> left = new ArrayList<Node>();
     public ArrayList<Node> right = new ArrayList<Node>();
 
+    // change this to constructor
     public static BipartiteGraph readGraph(String path) {
         // reads in a file at path
         // format (number of nodes on first line then all edges):
@@ -31,9 +34,12 @@ public class BipartiteGraph {
             }
 
             while (reader.hasNextLine()) {
-                String[] s = reader.nextLine().split(" ");
-                int l = Integer.parseInt(s[0]);
-                int r = Integer.parseInt(s[1]);
+                Pattern p = Pattern.compile("\\d+");
+                Matcher m = p.matcher(reader.nextLine());
+                m.find();
+                int l = Integer.parseInt(m.group(0));
+                m.find();
+                int r = Integer.parseInt(m.group(0));
                 if (l >= num_nodes/2) { // swapped
                     int tmp = r;
                     r = l;
