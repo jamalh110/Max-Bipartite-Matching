@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        //BipartiteGraph g = BipartiteGraph.readGraph("./Hungarian-Heuristics/test.txt");
-        BipartiteGraph g = generateTestGraph(500, 1000);
+        BipartiteGraph g = new BipartiteGraph("log.txt");
+        // BipartiteGraph g = generateTestGraph(500, 1000);
         //BipartiteGraph g = test1();
         System.out.println(g.printGraph(true));
 
@@ -15,6 +15,7 @@ public class Main {
         }
         System.out.println("Matching size: " + matching.size());
         System.out.println("Bipartite Graph size: " + g.left.size());
+        // g.toFile("log.txt");
     }
 
 

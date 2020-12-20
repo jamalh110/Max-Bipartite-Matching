@@ -1,4 +1,3 @@
-import java.time.Year;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +44,6 @@ public class Algorithm {
         LinkedList<Edge> matchedEdgeFrontier = new LinkedList<Edge>();
         // boolean lookingForMatched = false
         // BFS
-        int layer = 1;
         Node freeNode = null;
         //switch to dfs thing later
         
