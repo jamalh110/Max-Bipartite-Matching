@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        BipartiteGraph g = generateTestGraph(2000, 20000);
+        BipartiteGraph g = generateTestGraph(1000, 5000);
         //BipartiteGraph g = test1();
         System.out.println(g.printGraph());
 
@@ -16,7 +16,7 @@ public class Main {
         System.out.println("Bipartite Graph size: " + g.left.size());
     }
 
-    
+
     public static BipartiteGraph test1(){
         BipartiteGraph b = new BipartiteGraph();
         for (int i = 0; i < 6; i++) {
