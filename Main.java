@@ -6,17 +6,19 @@ public class Main {
         // BipartiteGraph g = new BipartiteGraph("log.txt");
         BipartiteGraph g = generateTestGraph(6000, 6000);
         //BipartiteGraph g = test1();
-        System.out.println(g.printGraph(true));
-
-        List<Edge> matching  = Algorithm.hopKarp(g);
-        // List<Edge> matching  = Algorithm.hopKarpFast(g);
+        // System.out.println(g.printGraph());
         
+        // List<Edge> matching  = Algorithm.hopKarp(g);
+        long start = System.currentTimeMillis();
+        List<Edge> matching  = Algorithm.hopKarpFast(g);
+        long time = System.currentTimeMillis() - start;
         // for(Edge e: matching){
         //     System.out.println(e);
         // }
         System.out.println("Matching size: " + matching.size());
         System.out.println("Bipartite Graph size: " + g.left.size());
-        // g.toFile("log.txt");
+        System.out.println("Time: " + time + " ms");
+        g.toFile("log.txt");
     }
 
 

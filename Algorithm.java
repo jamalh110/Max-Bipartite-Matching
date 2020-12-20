@@ -1,12 +1,11 @@
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
-import java.util.SortedMap;
 import java.util.LinkedList;
 
 public class Algorithm {
@@ -121,7 +120,7 @@ public class Algorithm {
     public static LinkedList<Edge> getAugmentingPathFast(BipartiteGraph graph, Set<Edge> matching,
             Set<Edge> unmatched) {
         Set<Node> lfree = new TreeSet<Node>();
-        Set<Node> rfree = new TreeSet<Node>(); // may want to change this to better data structure later
+        Set<Node> rfree = new TreeSet<Node>(); 
         for (Node n : graph.left) {
             lfree.add(n);
         }
@@ -145,7 +144,7 @@ public class Algorithm {
         }
 
         Set<Node> hitNodes = new TreeSet<Node>();
-        HashMap<Node,Node> map = new HashMap<Node,Node>();
+        TreeMap<Node,Node> map = new TreeMap<Node,Node>();
 
 
         Set<Edge> unmatchedEdgeFrontier = new TreeSet<Edge>();
