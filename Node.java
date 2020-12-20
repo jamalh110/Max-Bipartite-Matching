@@ -42,7 +42,9 @@ public class Node {
         }
         
         return p;
-   
-  
+    }
+
+    public String toString() {
+        return Integer.toString(name);
     }
 }
