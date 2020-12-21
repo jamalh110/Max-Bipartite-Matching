@@ -6,14 +6,18 @@ public class Main {
     public static void main(String[] args) {
        
         System.out.println("Generating graph");
-        Test.testDirectory("tests", "faster");
+        String mode = "faster";
+        Test.testDirectory("tests/test_100", mode);
+        Test.testDirectory("tests/test_500", mode);
+        Test.testDirectory("tests/test_1000", mode);
+        Test.testDirectory("tests/test_5000", mode);
         // BipartiteGraph g = new BipartiteGraph("log2.txt");
-        // // int n = 1000;
-        // // int nEdge = (int)Math.pow(n, 1.5);
-        // // BipartiteGraph g = generateTestGraph(n, nEdge);
+        // int n = 500;
+        // int nEdge = (int)Math.pow(n, 1.5);
+        // BipartiteGraph g = generateTestGraph(n, nEdge);
         // System.out.println("Generated graph");
-        // // g.toFile("log2.txt");
-        // //System.exit(0);
+        // g.toFile("test_"+ n + "_2.txt");
+        //System.exit(0);
         
 
         // System.out.println("starting algorithm");

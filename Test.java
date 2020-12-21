@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Test {
     // mode options: "normal", "fast", "faster"
-    public static void testFile(String path, String mode) {
+    public static long testFile(String path, String mode) {
         BipartiteGraph g = new BipartiteGraph(path);
         long time = 0L;
         List<Edge> matching = new LinkedList<Edge>();
@@ -28,13 +28,21 @@ public class Test {
         System.out.println("File: "+ path);
         System.out.println("Matching took: " + time + " ms");
         System.out.println("Matching size: " + matching.size());
+        return time;
     }
 
-    public static void testDirectory(String path, String mode) {
+    public static double testDirectory(String path, String mode) {
+        System.out.println("Evaluating: " + path);
         File[] files = new File(path).listFiles();
+        long sum = 0;
+        int count = 0;
         for(File f: files) {
-            testFile(f.getPath(), mode);
-            System.out.println();
+            sum += testFile(f.getPath(), mode);
+            // System.out.println();
+            count++;
         }
+        double avg = sum/count;
+        System.out.println("Average time: " + avg + " ms\n");
+        return avg;
     }
 }
