@@ -68,16 +68,13 @@ public class Algorithm {
         // TODO: store free in nodes themselves
         hitNodes.addAll(lfree);
         Set<Edge> matchedEdgeFrontier = new HashSet<Edge>();
-        // boolean lookingForMatched = false
-        // BFS
-        //Node freeNode = null;
-        // switch to dfs thing later
+
         boolean lastLayer = false;
         HashSet<Node> freeNodes = new HashSet<Node>();
         int k = 0;
         LinkedList<HashSet<Node>> layers = new LinkedList<HashSet<Node>>();
         layers.add(new HashSet<Node>());
-        for(Node n:lfree){
+        for (Node n : lfree) {
             layers.get(0).add(n);
         }
 
@@ -92,14 +89,14 @@ public class Algorithm {
                 if (rfree.contains(e.getRight())) {
                     // found augmenting path!
                     map.put(e.getRight(), e.getLeft());
-                    if(!freeNodes.contains(e.getRight())){
+                    if (!freeNodes.contains(e.getRight())) {
                         freeNodes.add(e.getRight());
                     }
-                    lastLayer=true;
+                    lastLayer = true;
                 } else if (!hitNodes.contains(e.getRight())) {
                     hitNodes.add(e.getRight());
 
-                    //maybe move this?
+                    // maybe move this?
                     layers.getLast().add(e.getRight());
 
                     for (Edge nodeEdge : e.getRight().edges) {
@@ -110,25 +107,23 @@ public class Algorithm {
                     }
                 }
             }
-            
+
             unmatchedEdgeFrontier = new HashSet<Edge>();
             if (matchedEdgeFrontier.size() == 0) {
                 break;
             }
-            if(lastLayer){
+            if (lastLayer) {
                 break;
             }
 
             k++;
             layers.addLast(new HashSet<Node>());
 
-
-
             // matched phase
             for (Edge e : matchedEdgeFrontier) {
                 if (!hitNodes.contains(e.getLeft())) {
                     hitNodes.add(e.getLeft());
-                    //mabye move this;
+                    // mabye move this;
                     layers.getLast().add(e.getLeft());
                     for (Edge nodeEdge : e.getLeft().edges) {
                         if (unmatched.contains(nodeEdge)) {
@@ -141,77 +136,64 @@ public class Algorithm {
             matchedEdgeFrontier = new HashSet<Edge>();
 
         }
-        if (freeNodes.size() == 0){
+        if (freeNodes.size() == 0) {
             return null;
         }
 
+        // dfs for maximal augments
+        return dfsBack(layers, k, freeNodes, lfree, rfree, matching);
+    }
 
-
-        //dfs for maximal augments
-
+    public static LinkedList<Edge> dfsBack(LinkedList<HashSet<Node>> layers, int k, HashSet<Node> freeNodes,
+            HashSet<Node> lfree, HashSet<Node> rfree, HashSet<Edge> matching) {
         layers.remove(k);
-        hitNodes = new HashSet<Node>();
+        HashSet<Node> hitNodes = new HashSet<Node>();
         HashSet<Node> foundPathNodes = new HashSet<Node>();
         LinkedList<Edge> combinedPath = new LinkedList<Edge>();
 
-        //System.out.println("Layers size: "+layers.size());
-        //System.out.println("K size: "+k);
-        //System.out.println("Free size: "+freeNodes.size());
-
-        for(HashSet<Node> layer : layers){
-            for(Node n : layer){
-                //System.out.println(n.name);
-            }
-            //System.out.println("\n\n");
-        }
-        for(Node freeNode : freeNodes){
-            //Node freeNode = n;
+        for (Node freeNode : freeNodes) {
             Stack<NodeVector> stack = new Stack<NodeVector>();
-            map = new HashMap<Node, Node>();
+            HashMap<Node, Node> map = new HashMap<Node, Node>();
             map.put(freeNode, null);
-            stack.push(new NodeVector(freeNode,k, false));
+            stack.push(new NodeVector(freeNode, k, false));
             Node foundNode = null;
-            while(!stack.empty()){
+            while (!stack.empty()) {
                 NodeVector currNode = stack.pop();
                 boolean brake = false;
-                for(Edge e:currNode.node.edges){
+                for (Edge e : currNode.node.edges) {
                     boolean layerboolean = false;
                     Node n = null;
-                    if(currNode.isLeft){
-                        layerboolean = layers.get(currNode.layer-1).contains(e.getRight()) && matching.contains(e);
+                    if (currNode.isLeft) {
+                        layerboolean = layers.get(currNode.layer - 1).contains(e.getRight()) && matching.contains(e);
                         n = e.getRight();
-                    }
-                    else if(!currNode.isLeft){
-                        layerboolean = layers.get(currNode.layer-1).contains(e.getLeft());
-                        //System.out.println(e.getLeft().name);
+                    } else if (!currNode.isLeft) {
+                        layerboolean = layers.get(currNode.layer - 1).contains(e.getLeft());
+                        // System.out.println(e.getLeft().name);
                         n = e.getLeft();
                     }
-                    if(!hitNodes.contains(n) && layerboolean){
-                        //check if you should only add this if it results in a path
+                    if (!hitNodes.contains(n) && layerboolean) {
+                        // check if you should only add this if it results in a path
                         hitNodes.add(n);
                         map.put(n, currNode.node);
-                        if(lfree.contains(n)){
-                            //System.out.println("found free node: " + n.name);
+                        if (lfree.contains(n)) {
                             brake = true;
                             foundNode = n;
                             break;
-                        }
-                        else{
-                            stack.push(new NodeVector(n, currNode.layer-1, !currNode.isLeft));
+                        } else {
+                            stack.push(new NodeVector(n, currNode.layer - 1, !currNode.isLeft));
                         }
                     }
 
                 }
 
-                if(brake){
-                    //System.out.println("broke");
+                if (brake) {
                     foundPathNodes.add(freeNode);
                     Node currentNode = foundNode;
                     LinkedList<Node> nodePath = new LinkedList<Node>();
                     while (true) {
                         nodePath.add(currentNode);
                         if (map.get(currentNode) == null) {
-                            //foundPathNodes.add(currentNode);
+                            // foundPathNodes.add(currentNode);
                             lfree.remove(foundNode);
                             break;
                         }
@@ -224,42 +206,18 @@ public class Algorithm {
                         edgePath.add(nodePath.get(i).getEdge(nodePath.get(i + 1)));
                     }
 
-                    //add path
+                    // add path
                     combinedPath.addAll(edgePath);
                     break;
                 }
             }
 
-
         }
 
-        //remove from rfree
+        // remove from rfree
         rfree.removeAll(foundPathNodes);
-        //lfree.removeAll(foundPathNodes);
 
-        //chnage this to hashset
-        //System.out.println("Combined path size: "+combinedPath.size());
         return combinedPath;
-
-        // Node currentNode = freeNode;
-        // rfree.remove(freeNode);
-        // LinkedList<Node> nodePath = new LinkedList<Node>();
-        // while (true) {
-        //     nodePath.add(currentNode);
-        //     if (map.get(currentNode) == null) {
-        //         lfree.remove(currentNode);
-        //         break;
-        //     }
-        //     currentNode = map.get(currentNode);
-        // }
-
-        // LinkedList<Edge> edgePath = new LinkedList<Edge>();
-        // assert nodePath.size() > 1;
-        // for (int i = 0; i < nodePath.size() - 1; i++) {
-        //     edgePath.add(nodePath.get(i).getEdge(nodePath.get(i + 1)));
-        // }
-        // return edgePath;
-
     }
 
     public static LinkedList<Edge> getAugmentingPathFast(BipartiteGraph graph, HashSet<Edge> matching,
@@ -378,9 +336,9 @@ public class Algorithm {
 
         LinkedList<Edge> path = new LinkedList<Edge>();
 
-        //path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
+        // path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
         xorMatch(matching, unmatched, path);
-        //System.out.println("Size after first pass: " + matching.size());
+        // System.out.println("Size after first pass: " + matching.size());
         while (true) {
             path = getAugmentingPathFaster(graph, matching, unmatched, lfree, rfree);
             if (path != null) {
@@ -410,9 +368,9 @@ public class Algorithm {
 
         LinkedList<Edge> path = new LinkedList<Edge>();
 
-        //path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
+        // path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
         xorMatch(matching, unmatched, path);
-        //System.out.println("Size after first pass: " + matching.size());
+        // System.out.println("Size after first pass: " + matching.size());
         while (true) {
             path = getAugmentingPathFast(graph, matching, unmatched, lfree, rfree);
             if (path != null) {

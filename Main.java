@@ -6,35 +6,36 @@ public class Main {
     public static void main(String[] args) {
        
         System.out.println("Generating graph");
-        //BipartiteGraph g = new BipartiteGraph("log2.txt");
-        int n = 1000;
-        int nEdge = (int)Math.pow(n, 1.5);
-        BipartiteGraph g = generateTestGraph(n, nEdge);
-        System.out.println("Generated graph");
-        g.toFile("log2.txt");
-        //System.exit(0);
+        Test.testDirectory("tests", "faster");
+        // BipartiteGraph g = new BipartiteGraph("log2.txt");
+        // // int n = 1000;
+        // // int nEdge = (int)Math.pow(n, 1.5);
+        // // BipartiteGraph g = generateTestGraph(n, nEdge);
+        // System.out.println("Generated graph");
+        // // g.toFile("log2.txt");
+        // //System.exit(0);
         
 
-        System.out.println("starting algorithm");
-        long start = System.currentTimeMillis();
-        List<Edge> matching  = Algorithm.hopKarpFast(g);
-        long time = System.currentTimeMillis() - start;
-        // for(Edge e: matching){
-        //     System.out.println(e);
-        // }
-        System.out.println("Matching size: " + matching.size());
-        //System.out.println("Bipartite Graph size: " + g.left.size());
-        System.out.println("Time fast: " + time + " ms");
+        // System.out.println("starting algorithm");
+        // // long start = System.currentTimeMillis();
+        // // List<Edge> matching  = Algorithm.hopKarpFast(g);
+        // // long time = System.currentTimeMillis() - start;
+        // // for(Edge e: matching){
+        // //     System.out.println(e);
+        // // }
+        // // System.out.println("Matching size: " + matching.size());
+        // //System.out.println("Bipartite Graph size: " + g.left.size());
+        // // System.out.println("Time fast: " + time + " ms");
 
-        start = System.currentTimeMillis();
-        matching  = Algorithm.hopKarpFaster(g);
-        time = System.currentTimeMillis() - start;
-        // for(Edge e: matching){
-        //     System.out.println(e);
-        // }
-        System.out.println("Matching size: " + matching.size());
-        //System.out.println("Bipartite Graph size: " + g.left.size());
-        System.out.println("Time faster: " + time + " ms");
+        // long start = System.currentTimeMillis();
+        // List<Edge> matching  = Algorithm.hopKarpFaster(g);
+        // long time = System.currentTimeMillis() - start;
+        // // for(Edge e: matching){
+        // //     System.out.println(e);
+        // // }
+        // System.out.println("Matching size: " + matching.size());
+        // //System.out.println("Bipartite Graph size: " + g.left.size());
+        // System.out.println("Time faster: " + time + " ms");
         
     }
 
