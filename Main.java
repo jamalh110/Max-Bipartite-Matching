@@ -7,11 +7,11 @@ public class Main {
        
         System.out.println("Generating graph");
         //BipartiteGraph g = new BipartiteGraph("log2.txt");
-        int n = 6000;
-        int nEdge = (int)Math.pow(n, 1.4);
+        int n = 1000;
+        int nEdge = (int)Math.pow(n, 1.5);
         BipartiteGraph g = generateTestGraph(n, nEdge);
         System.out.println("Generated graph");
-        //g.toFile("log2.txt");
+        g.toFile("log2.txt");
         //System.exit(0);
         
 
@@ -23,8 +23,18 @@ public class Main {
         //     System.out.println(e);
         // }
         System.out.println("Matching size: " + matching.size());
-        System.out.println("Bipartite Graph size: " + g.left.size());
-        System.out.println("Time: " + time + " ms");
+        //System.out.println("Bipartite Graph size: " + g.left.size());
+        System.out.println("Time fast: " + time + " ms");
+
+        start = System.currentTimeMillis();
+        matching  = Algorithm.hopKarpFaster(g);
+        time = System.currentTimeMillis() - start;
+        // for(Edge e: matching){
+        //     System.out.println(e);
+        // }
+        System.out.println("Matching size: " + matching.size());
+        //System.out.println("Bipartite Graph size: " + g.left.size());
+        System.out.println("Time faster: " + time + " ms");
         
     }
 
