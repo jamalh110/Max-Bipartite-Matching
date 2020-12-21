@@ -45,4 +45,11 @@ public class Test {
         System.out.println("Average time: " + avg + " ms\n");
         return avg;
     }
+
+    public static void testSuite(String path, String mode) {
+        File[] files = new File(path).listFiles();
+        for(File f: files) {
+            testDirectory(f.getPath(), mode);
+        }
+    }
 }

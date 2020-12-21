@@ -7,10 +7,11 @@ public class Main {
        
         System.out.println("Generating graph");
         String mode = "faster";
-        Test.testDirectory("tests/test_100", mode);
-        Test.testDirectory("tests/test_500", mode);
-        Test.testDirectory("tests/test_1000", mode);
-        Test.testDirectory("tests/test_5000", mode);
+        // Test.testDirectory("tests/test_100", mode);
+        // Test.testDirectory("tests/test_500", mode);
+        // Test.testDirectory("tests/test_1000", mode);
+        // Test.testDirectory("tests/test_5000", mode);
+        Test.testSuite("tests", mode);
         // BipartiteGraph g = new BipartiteGraph("log2.txt");
         // int n = 500;
         // int nEdge = (int)Math.pow(n, 1.5);
