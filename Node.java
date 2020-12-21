@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable<Node> {
     int name;
+    boolean matched = false;
     ArrayList<Edge> edges = new ArrayList<Edge>();
     public Node(int name){
         this.name=name;
@@ -44,6 +45,12 @@ public class Node {
         return p;
     }
 
+    @Override
+    public int compareTo(Node n) {
+        return Integer.compare(name, n.name);
+    }
+
+    @Override
     public String toString() {
         return Integer.toString(name);
     }
