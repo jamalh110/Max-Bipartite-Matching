@@ -50,6 +50,7 @@ public class Test {
         File[] files = new File(path).listFiles();
         for(File f: files) {
             testDirectory(f.getPath(), mode);
+            System.out.println();
         }
     }
 }
