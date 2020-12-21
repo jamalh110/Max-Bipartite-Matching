@@ -35,14 +35,14 @@ public class Test {
         System.out.println("Evaluating: " + path);
         File[] files = new File(path).listFiles();
         long sum = 0;
-        int count = 0;
+        double count = 0.0;
         for(File f: files) {
             sum += testFile(f.getPath(), mode);
             // System.out.println();
             count++;
         }
         double avg = sum/count;
-        System.out.println("Average time: " + avg + " ms\n");
+        System.out.format("Average time: %.3f ms\n", avg);
         return avg;
     }
 
