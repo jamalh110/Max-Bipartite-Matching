@@ -34,6 +34,24 @@ public class Algorithm {
         }
     }
 
+    public static LinkedList<Edge> getInitialMatching(BipartiteGraph graph, HashSet<Edge> matching,
+    Set<Edge> unmatched, HashSet<Node> lfree, HashSet<Node> rfree) {
+        LinkedList<Edge> matches = new LinkedList<Edge>();
+        HashSet<Node> matchedRight = new HashSet<Node>();
+        for(Node n : graph.left){
+            for(Edge e: n.edges){
+                if(!matchedRight.contains(e.getRight())){
+                    matches.add(e);
+                    matchedRight.add(e.getRight());
+                    lfree.remove(n);
+                    rfree.remove(e.getRight());
+                    break;
+                }
+            }
+        }
+
+        return matches;
+    }
     
     public static LinkedList<Edge> getAugmentingPathFast(BipartiteGraph graph, HashSet<Edge> matching,
             Set<Edge> unmatched, HashSet<Node> lfree, HashSet<Node> rfree) {
@@ -152,9 +170,17 @@ public class Algorithm {
             }
         }
 
+
+
+
         LinkedList<Edge> path;
+
+
+        path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
+        xorMatch(matching, unmatched, path);
+        System.out.println("Size after first pass: " + matching.size());
         while (true) {
-            path = getAugmentingPathFastTree(graph, matching, unmatched, lfree, rfree);
+            path = getAugmentingPathFast(graph, matching, unmatched, lfree, rfree);
             if (path != null) {
                 xorMatch(matching, unmatched, path);
             } else {

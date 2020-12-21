@@ -7,10 +7,10 @@ public class Main {
        
         System.out.println("Generating graph");
         //BipartiteGraph g = new BipartiteGraph("log2.txt");
-        int n = 1000;
-        int nEdge = (int)Math.pow(n, 1.5);
+        int n = 6000;
+        int nEdge = (int)Math.pow(n, 1.4);
         BipartiteGraph g = generateTestGraph(n, nEdge);
-        //System.out.println("Generated graph");
+        System.out.println("Generated graph");
         //g.toFile("log2.txt");
         //System.exit(0);
         
