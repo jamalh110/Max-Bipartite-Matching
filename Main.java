@@ -17,22 +17,22 @@ public class Main {
 
         System.out.println("starting algorithm");
         long start = System.currentTimeMillis();
-        List<Edge> matching  = Algorithm.hopKarpFast(g);
+        //List<Edge> matching  = Algorithm.hopKarpFast(g);
         long time = System.currentTimeMillis() - start;
         // for(Edge e: matching){
         //     System.out.println(e);
         // }
-        System.out.println("Matching size: " + matching.size());
+        //System.out.println("Matching size: " + matching.size());
         //System.out.println("Bipartite Graph size: " + g.left.size());
         System.out.println("Time fast: " + time + " ms");
 
         start = System.currentTimeMillis();
-        matching  = Algorithm.hopKarpFaster(g);
+        List<Edge> matching2  = Algorithm.hopKarpFaster(g);
         time = System.currentTimeMillis() - start;
         // for(Edge e: matching){
         //     System.out.println(e);
         // }
-        System.out.println("Matching size: " + matching.size());
+        System.out.println("Matching size: " + matching2.size());
         //System.out.println("Bipartite Graph size: " + g.left.size());
         System.out.println("Time faster: " + time + " ms");
         
