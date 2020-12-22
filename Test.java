@@ -81,6 +81,7 @@ public class Test {
                 continue;
             }
             testDirectory(f.getPath(), mode);
+            System.out.println();
         }
     }
 }
