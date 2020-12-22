@@ -65,22 +65,27 @@ public class Algorithm {
             unmatchedEdgeFrontier.addAll(n.edges);
             map.put(n, null);
         }
+
         // TODO: store free in nodes themselves
         hitNodes.addAll(lfree);
         Set<Edge> matchedEdgeFrontier = new HashSet<Edge>();
-
         boolean lastLayer = false;
         HashSet<Node> freeNodes = new HashSet<Node>();
         int k = 0;
-        LinkedList<HashSet<Node>> layers = new LinkedList<HashSet<Node>>();
-        layers.add(new HashSet<Node>());
+
+        //LinkedList<HashSet<Node>> layers = new LinkedList<HashSet<Node>>();
+        HashMap<Integer,HashSet<Node>> layers = new HashMap<Integer,HashSet<Node>>();
+        //layers.add(new HashSet<Node>());
+        layers.put(0,new HashSet<Node>());
+        
         for (Node n : lfree) {
             layers.get(0).add(n);
         }
 
         while (true) {
             k++;
-            layers.addLast(new HashSet<Node>());
+            //layers.addLast(new HashSet<Node>());
+            layers.put(k,new HashSet<Node>());
             // unmatched phase
             if (unmatchedEdgeFrontier.size() == 0) {
                 break;
@@ -97,7 +102,8 @@ public class Algorithm {
                     hitNodes.add(e.getRight());
 
                     // maybe move this?
-                    layers.getLast().add(e.getRight());
+                    //layers.getLast().add(e.getRight());
+                    layers.get(k).add(e.getRight());
 
                     for (Edge nodeEdge : e.getRight().edges) {
                         if (matching.contains(nodeEdge)) {
@@ -117,14 +123,16 @@ public class Algorithm {
             }
 
             k++;
-            layers.addLast(new HashSet<Node>());
+            //layers.addLast(new HashSet<Node>());
+            layers.put(k,new HashSet<Node>());
 
             // matched phase
             for (Edge e : matchedEdgeFrontier) {
                 if (!hitNodes.contains(e.getLeft())) {
                     hitNodes.add(e.getLeft());
                     // mabye move this;
-                    layers.getLast().add(e.getLeft());
+                    //layers.getLast().add(e.getLeft());
+                    layers.get(k).add(e.getLeft());
                     for (Edge nodeEdge : e.getLeft().edges) {
                         if (unmatched.contains(nodeEdge)) {
                             map.put(e.getLeft(), e.getRight());
@@ -144,8 +152,11 @@ public class Algorithm {
         return dfsBack(layers, k, freeNodes, lfree, rfree, matching);
     }
 
-    public static LinkedList<Edge> dfsBack(LinkedList<HashSet<Node>> layers, int k, HashSet<Node> freeNodes,
+    //public static LinkedList<Edge> dfsBack(LinkedList<HashSet<Node>> layers, int k, HashSet<Node> freeNodes,
+            //HashSet<Node> lfree, HashSet<Node> rfree, HashSet<Edge> matching) {
+    public static LinkedList<Edge> dfsBack(HashMap<Integer,HashSet<Node>> layers, int k, HashSet<Node> freeNodes,
             HashSet<Node> lfree, HashSet<Node> rfree, HashSet<Edge> matching) {
+        //System.out.println(k);
         layers.remove(k);
         HashSet<Node> hitNodes = new HashSet<Node>();
         HashSet<Node> foundPathNodes = new HashSet<Node>();
@@ -336,7 +347,7 @@ public class Algorithm {
 
         LinkedList<Edge> path = new LinkedList<Edge>();
 
-        // path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
+        path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
         xorMatch(matching, unmatched, path);
         // System.out.println("Size after first pass: " + matching.size());
         while (true) {
@@ -368,7 +379,7 @@ public class Algorithm {
 
         LinkedList<Edge> path = new LinkedList<Edge>();
 
-        // path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
+        path = getInitialMatching(graph, matching, unmatched, lfree, rfree);
         xorMatch(matching, unmatched, path);
         // System.out.println("Size after first pass: " + matching.size());
         while (true) {
@@ -405,7 +416,7 @@ public class Algorithm {
                 // has_aug_path = false;
                 break;
             }
-            System.out.println(matching.size());
+           // System.out.println(matching.size());
         }
         return matching;
     }

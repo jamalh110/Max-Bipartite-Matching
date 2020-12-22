@@ -1,136 +1,24 @@
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 public class Main {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
        
-        System.out.println("Generating graph");
-        String mode = "faster";
-        // Test.testDirectory("tests/test_100", mode);
-        // Test.testDirectory("tests/test_500", mode);
-        // Test.testDirectory("tests/test_1000", mode);
-        // Test.testDirectory("tests/test_5000", mode);
+    //     int[] node_sizes = {10, 100, 200, 500, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 12500, 15000, 17500, 20000, 25000, 30000, 35000, 40000, 50000, 60000, 70000, 80000, 90000, 100000};
+    //     int[] num_connections =  {100, 1000, 2000, 5000, 10000, 20000, 30000, 40000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 250000, 300000, 350000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000};
+
+    //     for(int i = 0;i<node_sizes.length;i++){
+    //         BipartiteGraph g = generateTestGraph(node_sizes[i], num_connections[i]);
+    //         g.toFile("tests/test_"+node_sizes[i]+"/test_"+node_sizes[i]+"_"+num_connections[i]+".txt");
+    //     }
+    //    System.exit(0);
+       // System.out.println("Generating graph");
+        String mode = "normal";
         Test.testSuite("tests", mode);
-        // BipartiteGraph g = new BipartiteGraph("log2.txt");
-        // int n = 500;
-        // int nEdge = (int)Math.pow(n, 1.5);
-        // BipartiteGraph g = generateTestGraph(n, nEdge);
-        // System.out.println("Generated graph");
-        // g.toFile("test_"+ n + "_2.txt");
-        //System.exit(0);
-        
-
-        // System.out.println("starting algorithm");
-        // // long start = System.currentTimeMillis();
-        // // List<Edge> matching  = Algorithm.hopKarpFast(g);
-        // // long time = System.currentTimeMillis() - start;
-        // // for(Edge e: matching){
-        // //     System.out.println(e);
-        // // }
-        // // System.out.println("Matching size: " + matching.size());
-        // //System.out.println("Bipartite Graph size: " + g.left.size());
-        // // System.out.println("Time fast: " + time + " ms");
-
-        // long start = System.currentTimeMillis();
-        // List<Edge> matching  = Algorithm.hopKarpFaster(g);
-        // long time = System.currentTimeMillis() - start;
-        // // for(Edge e: matching){
-        // //     System.out.println(e);
-        // // }
-        // System.out.println("Matching size: " + matching.size());
-        // //System.out.println("Bipartite Graph size: " + g.left.size());
-        // System.out.println("Time faster: " + time + " ms");
-        
     }
 
-
-    public static BipartiteGraph test1(){
-        BipartiteGraph b = new BipartiteGraph();
-        for (int i = 0; i < 6; i++) {
-            Node n = new Node(i);
-            b.left.add(n);
-        }
-        for (int i = 0; i < 6; i++) {
-            Node n = new Node(i+6);
-            b.right.add(n);
-        }
-
-        Edge e1 = new Edge(b.left.get(0), b.right.get(0));
-        Edge e2 = new Edge(b.left.get(0), b.right.get(1));
-        Edge e3 = new Edge(b.left.get(0), b.right.get(2));
-        Edge e4 = new Edge(b.left.get(0), b.right.get(3));
-        Edge e5 = new Edge(b.left.get(0), b.right.get(4));
-        Edge e6 = new Edge(b.left.get(0), b.right.get(5));
-
-
-        b.left.get(0).edges.add(e2);
-        b.right.get(1).edges.add(e2);
-
-        b.left.get(0).edges.add(e3);
-        b.right.get(2).edges.add(e3);
-
-        b.left.get(0).edges.add(e1);
-        b.right.get(0).edges.add(e1);
-       
-       
-        b.left.get(0).edges.add(e5);
-        b.right.get(4).edges.add(e5);
-
-        b.left.get(0).edges.add(e6);
-        b.right.get(5).edges.add(e6);
-
-        b.left.get(0).edges.add(e4);
-        b.right.get(3).edges.add(e4);
-
-
-        Edge e7 = new Edge(b.left.get(1), b.right.get(0));
-        Edge e8 = new Edge(b.left.get(1), b.right.get(3));
-        Edge e9 = new Edge(b.left.get(1), b.right.get(2));
-
-        b.left.get(1).edges.add(e7);
-        b.right.get(0).edges.add(e7);
-
-        b.left.get(1).edges.add(e8);
-        b.right.get(3).edges.add(e8);
-
-        b.left.get(1).edges.add(e9);
-        b.right.get(2).edges.add(e9);
-
-
-        Edge e10 = new Edge(b.left.get(2), b.right.get(3));
-        Edge e11 = new Edge(b.left.get(2), b.right.get(1));
-        b.left.get(2).edges.add(e10);
-        b.right.get(3).edges.add(e10);
-
-        b.left.get(2).edges.add(e11);
-        b.right.get(1).edges.add(e11);
-
-        Edge e12 = new Edge(b.left.get(3), b.right.get(2));
-        Edge e13 = new Edge(b.left.get(3), b.right.get(0));
-        Edge e14 = new Edge(b.left.get(3), b.right.get(3));
-
-        b.left.get(3).edges.add(e12);
-        b.right.get(2).edges.add(e12);
-
-        b.left.get(3).edges.add(e13);
-        b.right.get(0).edges.add(e13);
-
-        b.left.get(3).edges.add(e14);
-        b.right.get(3).edges.add(e14);
-
-        Edge e15 = new Edge(b.left.get(4), b.right.get(2));
-
-        b.left.get(4).edges.add(e15);
-        b.right.get(2).edges.add(e15);
-
-        Edge e16 = new Edge(b.left.get(5), b.right.get(5));
-
-        b.left.get(1).edges.add(e16);
-        b.right.get(5).edges.add(e16);
-
-        return b;
-    }
     public static BipartiteGraph generateTestGraph(int num_nodes, int num_connections) {
         BipartiteGraph b = new BipartiteGraph();
         for (int i = 0; i < num_nodes; i++) {

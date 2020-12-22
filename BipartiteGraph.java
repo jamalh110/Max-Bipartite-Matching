@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,20 +62,29 @@ public class BipartiteGraph {
         }
     }
 
-    public void toFile(String path) {
-        String s = Integer.toString(left.size() * 2);
+    public void toFile(String path) throws IOException {
+        // String s = Integer.toString(left.size() * 2);
+        // for (Node node : left) {
+        //     for (Edge e : node.edges) {
+        //         s += "\n" + e.toString();
+        //     }
+        // }
+        // try {
+        //     FileWriter writer = new FileWriter(path);
+        //     writer.write(s);
+        //     writer.close();
+        // } catch (IOException e) {
+        //     System.out.println("Error saving file...");
+        // }
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
+
+        writer.write(Integer.toString(left.size() * 2));
         for (Node node : left) {
-            for (Edge e : node.edges) {
-                s += "\n" + e.toString();
+                for (Edge e : node.edges) {
+                    writer.append("\n" + e.toString());
+                }
             }
-        }
-        try {
-            FileWriter writer = new FileWriter(path);
-            writer.write(s);
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error saving file...");
-        }
+        writer.close();
     }
 
     public String printGraph() {
